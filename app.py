@@ -8,7 +8,7 @@ from bson.json_util import dumps
 
 app = Flask(__name__)
 
-client = MongoClient('localhost', 27017)  # mongoDB는 27017 포트로 돌아갑니다.
+client = MongoClient('mongodb://test:test@54.180.139.22', 27017)  # mongoDB는 27017 포트로 돌아갑니다.
 db = client.dbmuckji  # 'dbmuckji'라는 이름의 db를 만들거나 사용합니다.
 
 @app.route('/')
