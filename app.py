@@ -19,24 +19,33 @@ app.secret_key = "Jungle"
 @app.route('/')
 def home():
     return render_template('index.html')
-    # To.dev : 추후 개발
-    # token_receive = request.cookies.get('mytoken')
-    # try:
-    #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms='HS256')
-    #     user_info = db.users.find_one({"id": payload['id']})
-        
-    # except jwt.ExpiredSignatureError:
-    #     return redirect(url_for("index.html", msg="로그인 시간이 만료되었습니다.")) 
-    # except jwt.exceptions.DecodeError: 
-    #     return redirect(url_for("index.html", msg="로그인 정보가 존재하지 않습니다."))
 
 @app.route('/register')
 def registerPage():
     return render_template('register.html')
 
 @app.route('/main')
+# @jwt_required()
 def mainPage():
-    return render_template('main.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, app.secret_key, algorithms='HS256')
+        user_info = db.users.find_one({"id": payload['id']})
+        return render_template('main.html', username = user_info['username'], id = user_info['id'],
+                                kor = user_info['kor'], cn = user_info['cn'], jpn = user_info['jpn'], west = user_info['west'], etc = user_info['etc']
+                            )
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index.html", msg="로그인 시간이 만료되었습니다.")) 
+    except jwt.exceptions.DecodeError: 
+        return redirect(url_for("index.html", msg="로그인 정보가 존재하지 않습니다."))
+
+@app.route('/list')
+def menu_list():
+  testUser = db.users.find_one({'id':'jocy0412'},{'_id': False}) 
+  return render_template('main.html', name = testUser['username'], id = testUser['id'],
+                          kor = testUser['kor'], cn = testUser['cn'], jpn = testUser['jpn'],
+                          west = testUser['west'], etc = testUser['etc'], like = testUser['likecode']
+                        )
 
 @app.route('/api/addpage')
 def addPage():
@@ -124,21 +133,13 @@ def api_login():
         # [JWT] payload 지정
         payload = {
             'id': id_receive,
-            'exp': datetime.utcnow() + timedelta(seconds=3600)
+            'exp': datetime.utcnow() + timedelta(seconds=300)
         }
         # [JWT] 암호화 방식
         token = jwt.encode(payload, app.secret_key, algorithm='HS256')        
         return jsonify({'result':'success','token':token})
     else :
         return jsonify({'result':'fail','msg': '아이디/비밀번호가 일치하지 않습니다.'})
-
-@app.route('/list')
-def menu_list():
-  testUser = db.users.find_one({'id':'jocy0412'},{'_id': False}) 
-  return render_template('main.html', name = testUser['username'], id = testUser['id'],
-                          kor = testUser['kor'], cn = testUser['cn'], jpn = testUser['jpn'],
-                          west = testUser['west'], etc = testUser['etc'], like = testUser['likecode']
-                        )
 
 @app.route('/api/show', methods=['POST'])
 def show():

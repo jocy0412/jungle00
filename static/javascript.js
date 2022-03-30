@@ -25,7 +25,7 @@ function insertFunc(){
         success: function (response) {
             if(response["result"] == "success"){
                 alert('회원가입 완료!');
-                window.location.reload();
+                window.location.href='/'
             } else {
                     alert('다른 이유로 실패 했습니다.');
             }
@@ -61,10 +61,19 @@ function loginFunc(){
     })
 }
 
-// 로그아웃
+// 로그아웃 하기
 function logoutFunc(){
     $.removeCookie('mytoken');
     alert('로그아웃!');
+    window.location.href='/'
+}
+// 회원가입 페이지 가기
+function registFunc(){
+    window.location.href='/register'
+}
+
+// 메인으로 가기
+function homeFunc(){
     window.location.href='/'
 }
 
