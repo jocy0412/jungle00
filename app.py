@@ -2,15 +2,11 @@ from dis import code_info
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 # import simplejson as json
 # from bson import ObjectId
 # from bson.objectid import ObjectId
 from bson.json_util import dumps
 import requests
-from werkzeug.utils import secure_filename
-import os
 
 app = Flask(__name__)
 
@@ -119,6 +115,35 @@ def login():
         return jsonify({'result': 'success'})
     else :
         return jsonify({'result': 'fail'})
+
+@app.route('/list')
+def menu_list():
+  return render_template('index2.html')
+
+@app.route('/api/kor', methods=['GET'])
+def show_kor():
+  kor = list(db.shop.find({'food_category': '한식'}, {'_id': False}))
+  return jsonify({'result' : 'success', 'kor_list' : kor})
+
+@app.route('/api/west', methods=['GET'])
+def show_west():
+  west = list(db.shop.find({'food_category': '양식'}, {'_id': False}))
+  return jsonify({'result' : 'success', 'west_list' : west})
+
+@app.route('/api/cn', methods=['GET'])
+def show_cn():
+  cn = list(db.shop.find({'food_category': '중식'}, {'_id': False}))
+  return jsonify({'result' : 'success', 'cn_list' : cn})
+
+@app.route('/api/jp', methods=['GET'])
+def show_jp():
+  jp = list(db.shop.find({'food_category': '일식'}, {'_id': False}))
+  return jsonify({'result' : 'success', 'jp_list' : jp})
+
+@app.route('/api/etc', methods=['GET'])
+def show_etc():
+  etc = list(db.shop.find({'food_category': '기타'}, {'_id': False}))
+  return jsonify({'result' : 'success', 'etc_list' : etc})
 
 if __name__ == '__main__':  
    app.run('0.0.0.0',port=5000,debug=True)

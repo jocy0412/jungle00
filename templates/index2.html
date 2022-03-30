@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bulma -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"> -->
+    <!-- Optional JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- css 파일 분리 -->
+    <!-- <link rel="stylesheet" type="text/css" href = "{{url_for('static', filename='style1.css')}}" rel="stylesheet"> -->
+    <!-- js -->
+    <script src ="{{url_for('static', filename='javascript2.js')}}"></script>
+    <title>오늘 뭐 먹지?</title>
+    <style>
+        #left {
+            margin-bottom: 50px;
+        }
+        #left-top {
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="left">
+        <div id="left-top">
+            <p>OOO님 환영합니다.</p>
+            <div>
+                <input type="checkbox" id="scales" name="scales">
+                <label for="scales">메뉴추가</label>
+            </div>
+            <div>
+                <input type="checkbox" id="horns" name="horns">
+                <label for="horns">로그아웃</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="post-url">추천 카테고리를 선택해주세요.</label>
+            <div class="field is-grouped">
+                <p class="control">
+                    <input type="checkbox" name="category" id="한식" onclick="showKor()">한식
+                </p>
+                <p class="control">
+                    <input type="checkbox" name="category" id="양식" onclick="showWest()">양식
+                </p>
+                <p class="control">
+                    <input type="checkbox" name="category" id="중식" onclick="showCn()">중식
+                </p>
+                <p class="control">
+                    <input type="checkbox" name="category" id="일식" onclick="showJp()">일식
+                </p>
+                <p class="control">
+                    <input type="checkbox" name="category" id="기타" onclick="showEtc()">기타
+                </p>
+            </div>
+        </div>
+    </div>    
+    <div id="right">
+        <div id="right-top">한식 추천 메뉴</div>
+        <div id="card">
+            <p id="foodname">김치볶음밥</p>
+            <p id="storename">김볶스테이션</p>
+            <p id="address">주소 : ~</p>
+            <img src="">
+            <div class="field is-grouped">
+                <p class="control">
+                    <input type="checkbox" name="category" id="좋아요">좋아요
+                </p>
+                <p class="control">
+                    <input type="checkbox" name="category" id="싫어요">싫어요
+                </p>
+            </div>
+            <p>좋아요 : 3개</p>
+            <p>싫어요 : 1개</p>
+        </div>
+        <hr>
+    </div>
+    </body>
+</html>
