@@ -117,20 +117,33 @@ def insertInfo():
     pw_receive = request.form['pw_give']  # 클라이언트로부터 pw를 받는 부분
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest() # pw 해시 처리
 
-    userinfo = {
-                'username' : username_receive,
-                'id' : id_receive,
-                'password' : pw_hash,
-                'kor':'0',
-                'cn':'0',
-                'jpn':'0',
-                'west':'0',
-                'etc':'0'
-            }
+    id_check = db.users.find_one({'id': id_receive}) # 가입 중복 체크 하는 부분
 
-    db.users.insert_one(userinfo)
+    if id_check is None: 
+      userinfo = {
+                  'username' : username_receive,
+                  'id' : id_receive,
+                  'password' : pw_hash,
+                  'kor':'0',
+                  'cn':'0',
+                  'jpn':'0',
+                  'west':'0',
+                  'etc':'0'
+              }
 
-    return jsonify({'result': 'success'})
+      db.users.insert_one(userinfo)
+      return jsonify({'result': 'success'})
+    else: 
+      return jsonify({'result': 'fail'})
+
+@app.route('/api/doublecheck', methods=['POST'])
+def doubleCheck():
+    id_receive = request.form['id_give']  # 클라이언트로부터 id를 받는 부분
+    id_check = db.users.find_one({'id': id_receive}) # 가입 중복 체크 하는 부분
+    if id_check is None:
+      return jsonify({'result': 'success'})
+    else: 
+      return jsonify({'result': 'fail'})
 
 # 로그인 - id, pw를 받아서 맞춰보고, 토큰을 만들어 발급합니다.
 

@@ -27,7 +27,24 @@ function insertFunc(){
                 alert('회원가입 완료!');
                 window.location.href='/'
             } else {
-                    alert('다른 이유로 실패 했습니다.');
+                    alert('이미 가입된 ID입니다.');
+            }
+        }
+    })
+}
+
+// 중복확인
+function doubleCheck(){
+    let id_val = $('#input_id').val();
+    $.ajax({
+        type: "POST",
+        url: "/api/doublecheck",
+        data: {'id_give':id_val },
+        success: function (response) {
+            if(response["result"] == "success"){
+                alert('사용 가능한 ID입니다.');
+            } else {
+                alert('이미 가입된 ID입니다.');
             }
         }
     })
