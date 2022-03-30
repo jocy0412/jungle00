@@ -20,9 +20,15 @@ app.secret_key = "Jungle"
 def home():
     return render_template('index.html')
 
+# 회원가입 화면 
 @app.route('/register')
 def registerPage():
     return render_template('register.html')
+
+# 메뉴추가 화면
+@app.route('/api/addpage')
+def addPage():
+   return render_template('add.html')
 
 @app.route('/main')
 # @jwt_required()
@@ -31,26 +37,40 @@ def mainPage():
     try:
         payload = jwt.decode(token_receive, app.secret_key, algorithms='HS256')
         user_info = db.users.find_one({"id": payload['id']})
-        return render_template('main.html', username = user_info['username'], id = user_info['id'],
-                                kor = user_info['kor'], cn = user_info['cn'], jpn = user_info['jpn'], west = user_info['west'], etc = user_info['etc']
+        
+        kor = user_info['kor']
+        cn = user_info['cn']
+        jpn = user_info['jpn']
+        west = user_info['west'] 
+        etc = user_info['etc'] 
+      
+        kList = ""
+        if kor[0] == '1':
+          kList = list(db.shop.find({'food_category': '한식'}, {'_id': False}))
+        cList = ""
+        if cn[0] == '1':
+          cList = list(db.shop.find({'food_category': '중식'}, {'_id': False}))
+        jList = ""
+        if jpn[0] == '1':
+          jList = list(db.shop.find({'food_category': '일식'}, {'_id': False}))
+        wList = ""
+        if west[0] == '1':
+          wList = list(db.shop.find({'food_category': '양식'}, {'_id': False}))
+        eList = ""
+        if etc[0] == '1':
+          eList = list(db.shop.find({'food_category': '기타'}, {'_id': False}))
+        
+        return render_template('main.html', name = user_info['username'], id = user_info['id'],
+                                kor = user_info['kor'], cn = user_info['cn'], jpn = user_info['jpn'],
+                                west = user_info['west'], etc = user_info['etc'], kList = kList, cList = cList, jList = jList, wList = wList, eList = eList
                             )
+      
     except jwt.ExpiredSignatureError:
         return redirect(url_for("index.html", msg="로그인 시간이 만료되었습니다.")) 
     except jwt.exceptions.DecodeError: 
         return redirect(url_for("index.html", msg="로그인 정보가 존재하지 않습니다."))
 
-@app.route('/list')
-def menu_list():
-  testUser = db.users.find_one({'id':'jocy0412'},{'_id': False}) 
-  return render_template('main.html', name = testUser['username'], id = testUser['id'],
-                          kor = testUser['kor'], cn = testUser['cn'], jpn = testUser['jpn'],
-                          west = testUser['west'], etc = testUser['etc'], like = testUser['likecode']
-                        )
-
-@app.route('/api/addpage')
-def addPage():
-   return render_template('add.html')
-
+# 메뉴 추가
 @app.route('/api/add', methods=['POST'])
 def addMenu():
     # 1. 클라이언트로부터 데이터를 받기
@@ -140,57 +160,67 @@ def api_login():
         return jsonify({'result':'success','token':token})
     else :
         return jsonify({'result':'fail','msg': '아이디/비밀번호가 일치하지 않습니다.'})
-
+ 
+# 체크박스 선택 시 리스트 조회 및 카테고리 update 
 @app.route('/api/show', methods=['POST'])
 def show():
-  testUser = db.users.find_one({'id':'jocy0412'},{'_id': False}) 
-  print(testUser)
-  category_receive = request.form['category_give']
+  token_receive = request.cookies.get('mytoken')
+  try:
+      payload = jwt.decode(token_receive, app.secret_key, algorithms='HS256')
+      user_info = db.users.find_one({"id": payload['id']})
+      print('로그인한 사람',user_info)
+      
+      category_receive = request.form['category_give']
+      
+      if category_receive == 'kor':
+        if user_info['kor'] == '0':
+          db.users.update_one({'id':user_info['id']},{'$set':{'kor':'1'}})
+          kor = list(db.shop.find({'food_category': '한식'}, {'_id': False}))
+          return jsonify({'result' : 'success', 'list' : kor, 'status': 1})
+        else:
+          db.users.update_one({'id':user_info['id']},{'$set':{'kor':'0'}})
+          return jsonify({'result' : 'success','status': 0, 'category': '한식'})
+        
+      elif category_receive == 'west':  
+        if user_info['west'] == '0':
+          db.users.update_one({'id':user_info['id']},{'$set':{'west':'1'}})
+          west = list(db.shop.find({'food_category': '양식'}, {'_id': False}))
+          return jsonify({'result' : 'success', 'list' : west, 'status': 1})
+        else:
+          db.users.update_one({'id':user_info['id']},{'$set':{'west':'0'}})
+          return jsonify({'result' : 'success','status': 0, 'category': '양식'})
+      
+      elif category_receive == 'cn':
+        if user_info['cn'] == '0':
+          db.users.update_one({'id':user_info['id']},{'$set':{'cn':'1'}})
+          cn = list(db.shop.find({'food_category': '중식'}, {'_id': False}))
+          return jsonify({'result' : 'success', 'list' : cn, 'status': 1})
+        else:
+          db.users.update_one({'id':user_info['id']},{'$set':{'cn':'0'}})
+          return jsonify({'result' : 'success','status': 0, 'category': '중식'})  
+      
+      elif category_receive == 'jpn':
+        if user_info['jpn'] == '0':
+          db.users.update_one({'id':user_info['id']},{'$set':{'jpn':'1'}})
+          jpn = list(db.shop.find({'food_category': '일식'}, {'_id': False}))
+          return jsonify({'result' : 'success', 'list' : jpn, 'status': 1})
+        else:
+          db.users.update_one({'id':user_info['id']},{'$set':{'jpn':'0'}})
+          return jsonify({'result' : 'success','status': 0, 'category': '일식'})  
+      
+      else:
+        if user_info['etc'] == '0':
+          db.users.update_one({'id':user_info['id']},{'$set':{'etc':'1'}})
+          etc = list(db.shop.find({'food_category': '기타'}, {'_id': False}))
+          return jsonify({'result' : 'success', 'list' : etc, 'status': 1})
+        else:
+          db.users.update_one({'id':user_info['id']},{'$set':{'etc':'0'}})
+          return jsonify({'result' : 'success','status': 0, 'category': '기타'})       
+  except jwt.ExpiredSignatureError:
+      return redirect(url_for("index.html", msg="로그인 시간이 만료되었습니다.")) 
+  except jwt.exceptions.DecodeError: 
+      return redirect(url_for("index.html", msg="로그인 정보가 존재하지 않습니다."))
   
-  if category_receive == 'kor':
-    if testUser['kor'] == '0':
-      db.users.update_one({'id':testUser['id']},{'$set':{'kor':'1'}})
-      kor = list(db.shop.find({'food_category': '한식'}, {'_id': False}))
-      return jsonify({'result' : 'success', 'list' : kor, 'status': 1})
-    else:
-      db.users.update_one({'id':testUser['id']},{'$set':{'kor':'0'}})
-      return jsonify({'result' : 'success','status': 0, 'category': '한식'})
-    
-  elif category_receive == 'west':  
-    if testUser['west'] == '0':
-      db.users.update_one({'id':testUser['id']},{'$set':{'west':'1'}})
-      west = list(db.shop.find({'food_category': '양식'}, {'_id': False}))
-      return jsonify({'result' : 'success', 'list' : west, 'status': 1})
-    else:
-      db.users.update_one({'id':testUser['id']},{'$set':{'west':'0'}})
-      return jsonify({'result' : 'success','status': 0, 'category': '양식'})
-  
-  elif category_receive == 'cn':
-    if testUser['cn'] == '0':
-      db.users.update_one({'id':testUser['id']},{'$set':{'cn':'1'}})
-      cn = list(db.shop.find({'food_category': '중식'}, {'_id': False}))
-      return jsonify({'result' : 'success', 'list' : cn, 'status': 1})
-    else:
-      db.users.update_one({'id':testUser['id']},{'$set':{'cn':'0'}})
-      return jsonify({'result' : 'success','status': 0, 'category': '중식'})  
-  
-  elif category_receive == 'jpn':
-    if testUser['jpn'] == '0':
-      db.users.update_one({'id':testUser['id']},{'$set':{'jpn':'1'}})
-      jpn = list(db.shop.find({'food_category': '일식'}, {'_id': False}))
-      return jsonify({'result' : 'success', 'list' : jpn, 'status': 1})
-    else:
-      db.users.update_one({'id':testUser['id']},{'$set':{'jpn':'0'}})
-      return jsonify({'result' : 'success','status': 0, 'category': '일식'})  
-  
-  else:
-    if testUser['etc'] == '0':
-      db.users.update_one({'id':testUser['id']},{'$set':{'etc':'1'}})
-      etc = list(db.shop.find({'food_category': '기타'}, {'_id': False}))
-      return jsonify({'result' : 'success', 'list' : etc, 'status': 1})
-    else:
-      db.users.update_one({'id':testUser['id']},{'$set':{'etc':'0'}})
-      return jsonify({'result' : 'success','status': 0, 'category': '기타'}) 
 
 
 if __name__ == '__main__':  

@@ -73,17 +73,26 @@ function registFunc(){
 }
 
 // 메인으로 가기
+function menuAddFunc(){
+    window.location.href='/api/addpage'
+}
+
+// 메인으로 가기
 function homeFunc(){
     window.location.href='/'
 }
 
 // list 기능 구현
 
-$(document).ready(function() {
-    $("#right").html("");
-});
+// $(document).ready(function() {
+//     $("#right").html("");
+// });
   
 function show(category) {
+    // if (document.getElementsByName('first')){
+    //     $(".first").hide();
+    // }
+
     console.log("들어온 카테고리값: "+category)
     $.ajax({
     type: 'POST',
@@ -193,7 +202,7 @@ function addMenu() {
             if (response["result"] == "success") {
                 alert("메뉴 추가에 성공했습니다!");
                 // 3. 성공 시 페이지 새로고침하기
-                window.location.reload();
+                window.location.href='/main'
             } 
             if (response["result"] == "insertfail") {
                 alert("메뉴 추가에 실패했습니다!");

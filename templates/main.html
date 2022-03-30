@@ -40,25 +40,186 @@
             <div class="form-group">
                 <label for="post-url">추천 카테고리를 선택해주세요.</label>
                 <div class="field is-grouped">
-                    <p class="control">
-                        <input type="checkbox" name="category" onclick="show('kor')">한식
-                    </p>
-                    <p class="control">
-                        <input type="checkbox" name="category" onclick="show('cn')">중식
-                    </p>
-                    <p class="control">
-                        <input type="checkbox" name="category" onclick="show('jpn')">일식
-                    </p>
-                    <p class="control">
-                        <input type="checkbox" name="category" onclick="show('west')">양식
-                    </p>
-                    <p class="control">
-                        <input type="checkbox" name="category" onclick="show('etc')">기타
-                    </p>
+                    {% if kor == "1" %}
+                        <p class="control">
+                            <input type="checkbox" name="category" onclick="show('kor')" checked>한식
+                        </p>
+                    {% elif kor == "0"%}
+                        <p class="control">
+                            <input type="checkbox" name="category" onclick="show('kor')">한식
+                        </p>
+                    {% endif %}
+                    {% if cn == "1" %}
+                        <p class="control">
+                            <input type="checkbox" name="category" onclick="show('cn')" checked>중식
+                        </p>
+                    {% elif cn == "0"%}
+                        <p class="control">
+                            <input type="checkbox" name="category" onclick="show('cn')">중식
+                        </p>
+                    {% endif %}
+                    {% if jpn == "1" %}
+                        <p class="control">
+                            <input type="checkbox" name="category" onclick="show('jpn')" checked>일식
+                        </p>
+                    {% elif jpn == "0"%}
+                        <p class="control">
+                            <input type="checkbox" name="category" onclick="show('jpn')">일식
+                        </p>
+                    {% endif %}
+                    {% if west == "1" %}
+                        <p class="control">
+                            <input type="checkbox" name="category" onclick="show('west')" checked>양식
+                        </p>
+                    {% elif west == "0"%}
+                        <p class="control">
+                            <input type="checkbox" name="category" onclick="show('west')">양식
+                        </p>
+                    {% endif %}
+                    {% if etc == "1" %}
+                        <p class="control">
+                            <input type="checkbox" name="category" onclick="show('etc')" checked>기타
+                        </p>
+                    {% elif etc == "0"%}
+                        <p class="control">
+                            <input type="checkbox" name="category" onclick="show('etc')">기타
+                        </p>
+                    {% endif %}
                 </div>
             </div>
         </div>    
         <div id="right">
+            {% if kor == "1" %}
+                {% for k in kList %}
+                    <div id="kf" name="kf">
+                        <div id="{{k['food_category']}}">{{k['food_category']}} 추천 메뉴
+                            <div id="card">
+                                {% set code = k['food_code'] %}
+                                <p id="{{k['food_name']}}">{{k['food_name']}}</p>
+                                <p id="{{k['shop_name']}}">{{k['shop_name']}}</p>
+                                <p id="{{k['shop_address']}}">{{k['shop_address']}}</p>
+                                <img src="{{k['shop_img']}}">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <input type="checkbox" name="category" id="좋아요" onclick="like('{{code}}')">좋아요
+                                    </p>
+                                    <p class="control">
+                                        <input type="checkbox" name="category" id="싫어요" onclick="hate('{{code}}')">싫어요
+                                    </p>
+                                </div>
+                                <p>좋아요 : {{k['like']}}개</p>
+                                <p>싫어요 : {{k['hate']}}개</p>
+                                <hr>
+                            </div>
+                        </div>
+                    </div> 
+                {% endfor %}
+            {% endif %}
+            {% if cn == "1" %}
+                {% for k in cList %}
+                    <div id="cf" name="cf">
+                        <div id="{{k['food_category']}}">{{k['food_category']}} 추천 메뉴
+                            <div id="card">
+                                {% set code = k['food_code'] %}
+                                <p id="{{k['food_name']}}">{{k['food_name']}}</p>
+                                <p id="{{k['shop_name']}}">{{k['shop_name']}}</p>
+                                <p id="{{k['shop_address']}}">{{k['shop_address']}}</p>
+                                <img src="{{k['shop_img']}}">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <input type="checkbox" name="category" id="좋아요" onclick="like('{{code}}')">좋아요
+                                    </p>
+                                    <p class="control">
+                                        <input type="checkbox" name="category" id="싫어요" onclick="hate('{{code}}')">싫어요
+                                    </p>
+                                </div>
+                                <p>좋아요 : {{k['like']}}개</p>
+                                <p>싫어요 : {{k['hate']}}개</p>
+                                <hr>
+                            </div>
+                        </div>
+                    </div> 
+                {% endfor %}
+            {% endif %}
+            {% if jpn == "1" %}
+                {% for k in jList %}
+                    <div id="jf" name="jf">
+                        <div id="{{k['food_category']}}">{{k['food_category']}} 추천 메뉴
+                            <div id="card">
+                                {% set code = k['food_code'] %}
+                                <p id="{{k['food_name']}}">{{k['food_name']}}</p>
+                                <p id="{{k['shop_name']}}">{{k['shop_name']}}</p>
+                                <p id="{{k['shop_address']}}">{{k['shop_address']}}</p>
+                                <img src="{{k['shop_img']}}">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <input type="checkbox" name="category" id="좋아요" onclick="like('{{code}}')">좋아요
+                                    </p>
+                                    <p class="control">
+                                        <input type="checkbox" name="category" id="싫어요" onclick="hate('{{code}}')">싫어요
+                                    </p>
+                                </div>
+                                <p>좋아요 : {{k['like']}}개</p>
+                                <p>싫어요 : {{k['hate']}}개</p>
+                                <hr>
+                            </div>
+                        </div>
+                    </div> 
+                {% endfor %}
+            {% endif %}
+            {% if west == "1" %}
+                {% for k in wList %}
+                    <div id="wf" name="wf">
+                        <div id="{{k['food_category']}}">{{k['food_category']}} 추천 메뉴
+                            <div id="card">
+                                {% set code = k['food_code'] %}
+                                <p id="{{k['food_name']}}">{{k['food_name']}}</p>
+                                <p id="{{k['shop_name']}}">{{k['shop_name']}}</p>
+                                <p id="{{k['shop_address']}}">{{k['shop_address']}}</p>
+                                <img src="{{k['shop_img']}}">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <input type="checkbox" name="category" id="좋아요" onclick="like('{{code}}')">좋아요
+                                    </p>
+                                    <p class="control">
+                                        <input type="checkbox" name="category" id="싫어요" onclick="hate('{{code}}')">싫어요
+                                    </p>
+                                </div>
+                                <p>좋아요 : {{k['like']}}개</p>
+                                <p>싫어요 : {{k['hate']}}개</p>
+                                <hr>
+                            </div>
+                        </div>
+                    </div> 
+                {% endfor %}
+            {% endif %}
+            {% if etc == "1" %}
+                {% for k in eList %}
+                    <div id="ef" name="ef">
+                        <div id="{{k['food_category']}}">{{k['food_category']}} 추천 메뉴
+                            <div id="card">
+                                {% set code = k['food_code'] %}
+                                <p id="{{k['food_name']}}">{{k['food_name']}}</p>
+                                <p id="{{k['shop_name']}}">{{k['shop_name']}}</p>
+                                <p id="{{k['shop_address']}}">{{k['shop_address']}}</p>
+                                <img src="{{k['shop_img']}}">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <input type="checkbox" name="category" id="좋아요" onclick="like('{{code}}')">좋아요
+                                    </p>
+                                    <p class="control">
+                                        <input type="checkbox" name="category" id="싫어요" onclick="hate('{{code}}')">싫어요
+                                    </p>
+                                </div>
+                                <p>좋아요 : {{k['like']}}개</p>
+                                <p>싫어요 : {{k['hate']}}개</p>
+                                <hr>
+                            </div>
+                        </div>
+                    </div> 
+                {% endfor %}
+            {% endif %}
+             
         </div>
     </div>
 </body>
