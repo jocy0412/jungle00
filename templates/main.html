@@ -35,6 +35,42 @@
             </div>
         </div>
         <!-- 상태 화면 -->
+
+        <div id="left">
+            <div id="left-top">
+                <p>{{name}}({{id}})님 환영합니다.</p>
+                <div>
+                    <input type="checkbox" id="scales" name="scales">
+                    <label for="scales">메뉴추가</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="horns" name="horns">
+                    <label for="horns">로그아웃</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="post-url">추천 카테고리를 선택해주세요.</label>
+                <div class="field is-grouped">
+                    <p class="control">
+                        <input type="checkbox" name="category" onclick="show('kor')">한식
+                    </p>
+                    <p class="control">
+                        <input type="checkbox" name="category" onclick="show('cn')">중식
+                    </p>
+                    <p class="control">
+                        <input type="checkbox" name="category" onclick="show('jpn')">일식
+                    </p>
+                    <p class="control">
+                        <input type="checkbox" name="category" onclick="show('west')">양식
+                    </p>
+                    <p class="control">
+                        <input type="checkbox" name="category" onclick="show('etc')">기타
+                    </p>
+                </div>
+            </div>
+        </div>    
+        <div id="right">
+        </div>
     </div>
 </body>
 </html>
