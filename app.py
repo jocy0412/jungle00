@@ -91,7 +91,12 @@ def insertInfo():
     userinfo = {
                 'username' : username_receive,
                 'id' : id_receive,
-                'password' : pw_hash
+                'password' : pw_hash,
+                'kor':'0',
+                'cn':'0',
+                'jpn':'0',
+                'west':'0',
+                'etc':'0'
             }
 
     db.users.insert_one(userinfo)
