@@ -104,7 +104,11 @@ def login():
 
 @app.route('/list')
 def menu_list():
-  return render_template('index2.html')
+  testUser = db.users.find_one({'id':'jocy0412'},{'_id': False}) 
+  return render_template('index2.html', name = testUser['username'], id = testUser['id'],
+                          kor = testUser['kor'], cn = testUser['cn'], jpn = testUser['jpn'],
+                          west = testUser['west'], etc = testUser['etc'], like = testUser['likecode']
+                        )
 
 @app.route('/api/show', methods=['POST'])
 def show():
