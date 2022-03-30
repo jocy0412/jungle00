@@ -1,10 +1,16 @@
-from flask import Flask, render_template, jsonify, request # 서버 연결
+from dis import code_info
+from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 from bs4 import BeautifulSoup
-import simplejson as json
-from bson import ObjectId
-from bson.objectid import ObjectId
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+# import simplejson as json
+# from bson import ObjectId
+# from bson.objectid import ObjectId
 from bson.json_util import dumps
+import requests
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(__name__)
 
@@ -14,6 +20,63 @@ db = client.dbmuckji  # 'dbmuckji'라는 이름의 db를 만들거나 사용합�
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/api/addpage')
+def addPage():
+   return render_template('add.html')
+
+@app.route('/api/addPhoto')
+def addPhoto():
+   return render_template('addPhoto.html')
+
+@app.route('/api/add', methods=['POST'])
+def addMenu():
+    # 1. 클라이언트로부터 데이터를 받기
+    food_receive = request.form['food_give']
+    category_receive = request.form['category_give']
+    shop_name_receive= request.form['shop_name_give']
+    shop_address_receive= request.form['shop_address_give']
+    
+    # 3. dbmuckji DB로 보낼 데이터 정리
+    food = {
+            'food_name': food_receive, 
+            'food_category': category_receive, 
+            'shop_name': shop_name_receive,
+            'shop_address': shop_address_receive,
+            'shop_img': 0,
+            'like':0,    # like를 0으로 세팅
+            'hate':0,    # hate를 0으로 세팅
+            'food_code':0, # food_code를 0으로 세팅
+            'shop_url':0
+            # 'shop_url':url_receive,
+            }
+    
+    # 3. mongoDB에 데이터 넣기
+    # insert_one()은 inserted_id 속성을 지닌 object 리턴
+    x = db.shop.insert_one(food)
+    
+    # 4. food_code 업데이트
+    # insert가 제대로 되었으면 실행
+    if x:
+        result = list(db.shop.find().sort('_id',-1).limit(1))
+        code = result[0]['_id']
+        food_code = dumps(code)[10:18] # String타입으로 형변환 및 timestamp 부분 자르기
+        db.shop.update_one({'_id':code},{'$set':{'food_code':food_code}})
+    else:
+        return(jsonify({'result': 'insertfail'}))
+        
+
+    return jsonify({'result': 'success'})
+
+
+@app.route('/fileUpload', methods=['POST'])
+def fileUpload():
+    f = request.files['file']
+    f.save('./uploads/' + secure_filename(f.filename))
+    files = os.listdir("./uploads")
+    # print(f)
+
+
 
 if __name__ == '__main__':  
    app.run('0.0.0.0',port=5000,debug=True)

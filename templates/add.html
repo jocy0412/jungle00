@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘 뭐 먹지?</title>
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    
+    <!-- css 파일 분리 -->
+    <!-- <link rel="stylesheet" type="text/css" href = "../static/style.css"> -->
+    <link rel="stylesheet" type="text/css" href = "{{url_for('static', filename='style.css')}}" rel="stylesheet">
+
+    <!-- js -->
+    <script src ="../static/addjavascript.js"></script>
+    <!-- <script src ="{{url_for('static', filename='javascript.js')}}"></script> -->
+
+    <!--img 참고-->
+    <!-- <img src="{{ url_for('static', filename='rome.jpg') }}"/> -->
+    
+</head>
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
+<body>
+    <div class="wrap">
+        <div class="jumbotron">
+            <h1 class="display-4">메뉴 추가하기</h1>
+            <p class="lead">추가하고 싶은 메뉴와 식당을 입력해주세요!</p>
+            <hr class="my-4">
+            <div>
+                <div>
+                    <div class="form-group">
+                        <label for="post-url">추가하고 싶은 메뉴를 입력하세요</label>
+                        <input id="food_name" class="form-control" placeholder="메뉴를 입력하세요" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-url">메뉴의 카테고리를 선택하세요</label>
+                        <div class="field is-grouped">
+                            <p class="control">
+                              <input type="checkbox" name="category" id="한식">
+                              한식
+                            </p>
+                            <p class="control">
+                              <input type="checkbox" name="category" id="중식">
+                              중식
+                            </p>
+                            <p class="control">
+                              <input type="checkbox" name="category" id="일식">
+                              일식
+                            </p>
+                            <p class="control">
+                                <input type="checkbox" name="category" id="양식">
+                                양식
+                              </p>
+                            <p class="control">
+                              <input type="checkbox" name="category" id="기타">
+                              기타
+                            </p>
+                          </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="post-url">식당의 네이버 지도 url을 입력하세요</label>
+                        <input id="shop_url" class="form-control" placeholder="네이버 지도 url을 입력하세요">
+                    </div> -->
+                    <div class="form-group">
+                        <label for="post-url">식당을 추천해주세요</label>
+                        <input id="shop_name" class="form-control" placeholder="식당을 입력하세요" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-url">식당 위치를 입력해주세요</label>
+                        <input id="shop_address" class="form-control" placeholder="식당 위치를 입력하세요" required>
+                    </div>
+                    <button type="button" class="button" onclick="addMenu()">다음으로</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
