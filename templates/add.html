@@ -69,6 +69,15 @@
                         <input id="shop_url" class="form-control" placeholder="네이버 지도 url을 입력하세요">
                     </div> -->
                     <div class="form-group">
+                        <label for="post-url">메뉴 사진 url를 입력해주세요</label>
+                        <input id="shop_img" class="form-control" placeholder="메뉴 사진 url을 입력하세요" required>
+                        <!-- <p>
+                            <form action="/fileUpload" method="POST" enctype = "multipart/form-data">
+                            <input type = "file" name = "file" id= "shop_img"/>  
+                            <input type = "submit" value="이미지 저장"/>
+                        </p> -->
+                    </div>
+                    <div class="form-group">
                         <label for="post-url">식당을 추천해주세요</label>
                         <input id="shop_name" class="form-control" placeholder="식당을 입력하세요" required>
                     </div>
@@ -76,7 +85,7 @@
                         <label for="post-url">식당 위치를 입력해주세요</label>
                         <input id="shop_address" class="form-control" placeholder="식당 위치를 입력하세요" required>
                     </div>
-                    <button type="button" class="button" onclick="addMenu()">다음으로</button>
+                    <button type="button" class="button" onclick="addMenu()">메뉴 추가하기</button>
                 </div>
             </div>
         </div>

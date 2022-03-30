@@ -2,15 +2,12 @@ from dis import code_info
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-# import simplejson as json
-# from bson import ObjectId
-# from bson.objectid import ObjectId
 from bson.json_util import dumps
 import requests
 from werkzeug.utils import secure_filename
 import os
+from flask_pymongo import PyMongo
+import gridfs
 
 app = Flask(__name__)
 
@@ -25,10 +22,6 @@ def home():
 def addPage():
    return render_template('add.html')
 
-@app.route('/api/addPhoto')
-def addPhoto():
-   return render_template('addPhoto.html')
-
 @app.route('/api/add', methods=['POST'])
 def addMenu():
     # 1. 클라이언트로부터 데이터를 받기
@@ -36,19 +29,19 @@ def addMenu():
     category_receive = request.form['category_give']
     shop_name_receive= request.form['shop_name_give']
     shop_address_receive= request.form['shop_address_give']
+    shop_img_receive = request.form['shop_img_give']
     
-    # 3. dbmuckji DB로 보낼 데이터 정리
+    # 2. dbmuckji DB로 보낼 데이터 정리
     food = {
             'food_name': food_receive, 
             'food_category': category_receive, 
             'shop_name': shop_name_receive,
             'shop_address': shop_address_receive,
-            'shop_img': 0,
-            'like':0,    # like를 0으로 세팅
-            'hate':0,    # hate를 0으로 세팅
+            'shop_img': shop_img_receive,
+            'like':0,    
+            'hate':0,    
             'food_code':0, # food_code를 0으로 세팅
             'shop_url':0
-            # 'shop_url':url_receive,
             }
     
     # 3. mongoDB에 데이터 넣기
@@ -65,13 +58,7 @@ def addMenu():
         return jsonify({'result': 'success'})
     else:
         return(jsonify({'result': 'insertfail'}))
-       
-@app.route('/fileUpload', methods=['POST'])
-def fileUpload():
-    f = request.files['file']
-    f.save('./uploads/' + secure_filename(f.filename))
-    files = os.listdir("./uploads")
-    # print(f)
+
     
 @app.route('/login')
 def loginPage():
