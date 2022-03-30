@@ -1,4 +1,4 @@
-// 회원가입
+// 회원가입, 고객정보 데이터 입력
 function insertFunc(){
     // 회원가입시 입력정보
     let username_val = $('#input_username').val();
@@ -20,8 +20,8 @@ function insertFunc(){
 
     $.ajax({
         type: "POST",
-        url: "/insert",
-        data: {'username_give':username_val, 'id_give':id_val, 'password_give':password_val1},
+        url: "/api/register",
+        data: {'username_give':username_val, 'id_give':id_val, 'pw_give':password_val1},
         success: function (response) {
             if(response["result"] == "success"){
                 alert('회원가입 완료!');
@@ -29,7 +29,6 @@ function insertFunc(){
             } else {
                     alert('다른 이유로 실패 했습니다.');
             }
-
         }
     })
 }
@@ -37,15 +36,19 @@ function insertFunc(){
 // 로그인
 function loginFunc(){
     let id_val = $('#login_id').val();
-    let password_val = $('#login_password').val();
+    let pw_val = $('#login_password').val();
     $.ajax({
         type: "POST",
-        url: "/login",
-        data: {'id_give':id_val, 'password_give':password_val},
+        url: "/api/login",
+        data: {'id_give':id_val, 'pw_give':pw_val},
         success: function (response) {
             if(response["result"] == "success"){
+
+                // mytoken이라는 키 값으로 쿠키에 저장
+                $.cookie('mytoken', response['token']);
+
                 alert('로그인 되었습니다!');
-                window.location.reload();
+                window.location.href='/main';
             } else {
                 if(response["result"] == "not"){
                     alert('아이디가 없습니다!');
@@ -60,7 +63,7 @@ function loginFunc(){
 
 // 로그아웃
 function logoutFunc(){
-    // $.removeCooke('mytoken');
+    $.removeCookie('mytoken');
     alert('로그아웃!');
-    window.location.href='/login'
+    window.location.href='/'
 }
