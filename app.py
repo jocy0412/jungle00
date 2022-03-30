@@ -62,21 +62,63 @@ def addMenu():
         code = result[0]['_id']
         food_code = dumps(code)[10:18] # String타입으로 형변환 및 timestamp 부분 자르기
         db.shop.update_one({'_id':code},{'$set':{'food_code':food_code}})
+        return jsonify({'result': 'success'})
     else:
         return(jsonify({'result': 'insertfail'}))
-        
-
-    return jsonify({'result': 'success'})
-
-
+       
 @app.route('/fileUpload', methods=['POST'])
 def fileUpload():
     f = request.files['file']
     f.save('./uploads/' + secure_filename(f.filename))
     files = os.listdir("./uploads")
     # print(f)
+    
+@app.route('/login')
+def loginPage():
+    return render_template('login.html')
 
+# 회원가입 데이터 입력
+@app.route('/insert')
+def insertPage():
+    return render_template('login.html')
 
+@app.route('/insert', methods=['POST'])
+def insertInfo():
+     # 1. 클라이언트로부터 데이터를 받기
+    username_receive = request.form['username_give']  # 클라이언트로부터 username을 받는 부분
+    id_receive = request.form['id_give']  # 클라이언트로부터 id를 받는 부분
+    password_receive = request.form['password_give']  # 클라이언트로부터 pw를 받는 부분
+
+    userinfo = {
+                'username' : username_receive,
+                'id' : id_receive,
+                'password' : password_receive
+            }
+
+    db.users.insert_one(userinfo)
+
+    return jsonify({'result': 'success'})
+
+# 로그인
+@app.route('/login', methods=['POST'])
+def login():
+     # 1. 클라이언트로부터 데이터를 받기
+    id_receive = request.form['id_give']  # 클라이언트로부터 id를 받는 부분
+    password_receive = request.form['password_give']  # 클라이언트로부터 pw를 받는 부분
+
+    find_target = db.users.find_one({'id':id_receive})
+
+    # 로그인 할 아이디가 없을 경우
+    if find_target is None :
+        return jsonify({'result': 'not'})
+
+    target_id = find_target['id']
+    target_password = find_target['password']
+
+    if(id_receive == target_id and password_receive == target_password):
+        return jsonify({'result': 'success'})
+    else :
+        return jsonify({'result': 'fail'})
 
 if __name__ == '__main__':  
    app.run('0.0.0.0',port=5000,debug=True)
