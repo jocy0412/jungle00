@@ -38,42 +38,25 @@
             <label for="post-url">추천 카테고리를 선택해주세요.</label>
             <div class="field is-grouped">
                 <p class="control">
-                    <input type="checkbox" name="category" id="한식" onclick="showKor()">한식
+                    <input type="checkbox" name="category" onclick="show('kor')">한식
                 </p>
                 <p class="control">
-                    <input type="checkbox" name="category" id="양식" onclick="showWest()">양식
+                    <input type="checkbox" name="category" onclick="show('cn')">중식
                 </p>
                 <p class="control">
-                    <input type="checkbox" name="category" id="중식" onclick="showCn()">중식
+                    <input type="checkbox" name="category" onclick="show('jpn')">일식
                 </p>
                 <p class="control">
-                    <input type="checkbox" name="category" id="일식" onclick="showJp()">일식
+                    <input type="checkbox" name="category" onclick="show('west')">양식
                 </p>
                 <p class="control">
-                    <input type="checkbox" name="category" id="기타" onclick="showEtc()">기타
+                    <input type="checkbox" name="category" onclick="show('etc')">기타
                 </p>
             </div>
         </div>
     </div>    
     <div id="right">
-        <div id="right-top">한식 추천 메뉴</div>
-        <div id="card">
-            <p id="foodname">김치볶음밥</p>
-            <p id="storename">김볶스테이션</p>
-            <p id="address">주소 : ~</p>
-            <img src="">
-            <div class="field is-grouped">
-                <p class="control">
-                    <input type="checkbox" name="category" id="좋아요">좋아요
-                </p>
-                <p class="control">
-                    <input type="checkbox" name="category" id="싫어요">싫어요
-                </p>
-            </div>
-            <p>좋아요 : 3개</p>
-            <p>싫어요 : 1개</p>
-        </div>
-        <hr>
     </div>
     </body>
+    
 </html>

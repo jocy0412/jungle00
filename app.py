@@ -3,9 +3,6 @@ from pymongo import MongoClient
 from bs4 import BeautifulSoup
 from bson.json_util import dumps
 import requests
-from flask_pymongo import PyMongo
-import gridfs
-
 
 app = Flask(__name__)
 
@@ -109,30 +106,57 @@ def login():
 def menu_list():
   return render_template('index2.html')
 
-@app.route('/api/kor', methods=['GET'])
-def show_kor():
-  kor = list(db.shop.find({'food_category': '한식'}, {'_id': False}))
-  return jsonify({'result' : 'success', 'kor_list' : kor})
+@app.route('/api/show', methods=['POST'])
+def show():
+  testUser = db.users.find_one({'id':'jocy0412'},{'_id': False}) 
+  print(testUser)
+  category_receive = request.form['category_give']
+  
+  if category_receive == 'kor':
+    if testUser['kor'] == '0':
+      db.users.update_one({'id':testUser['id']},{'$set':{'kor':'1'}})
+      kor = list(db.shop.find({'food_category': '한식'}, {'_id': False}))
+      return jsonify({'result' : 'success', 'list' : kor, 'status': 1})
+    else:
+      db.users.update_one({'id':testUser['id']},{'$set':{'kor':'0'}})
+      return jsonify({'result' : 'success','status': 0, 'category': '한식'})
+    
+  elif category_receive == 'west':  
+    if testUser['west'] == '0':
+      db.users.update_one({'id':testUser['id']},{'$set':{'west':'1'}})
+      west = list(db.shop.find({'food_category': '양식'}, {'_id': False}))
+      return jsonify({'result' : 'success', 'list' : west, 'status': 1})
+    else:
+      db.users.update_one({'id':testUser['id']},{'$set':{'west':'0'}})
+      return jsonify({'result' : 'success','status': 0, 'category': '양식'})
+  
+  elif category_receive == 'cn':
+    if testUser['cn'] == '0':
+      db.users.update_one({'id':testUser['id']},{'$set':{'cn':'1'}})
+      cn = list(db.shop.find({'food_category': '중식'}, {'_id': False}))
+      return jsonify({'result' : 'success', 'list' : cn, 'status': 1})
+    else:
+      db.users.update_one({'id':testUser['id']},{'$set':{'cn':'0'}})
+      return jsonify({'result' : 'success','status': 0, 'category': '중식'})  
+  
+  elif category_receive == 'jpn':
+    if testUser['jpn'] == '0':
+      db.users.update_one({'id':testUser['id']},{'$set':{'jpn':'1'}})
+      jpn = list(db.shop.find({'food_category': '일식'}, {'_id': False}))
+      return jsonify({'result' : 'success', 'list' : jpn, 'status': 1})
+    else:
+      db.users.update_one({'id':testUser['id']},{'$set':{'jpn':'0'}})
+      return jsonify({'result' : 'success','status': 0, 'category': '일식'})  
+  
+  else:
+    if testUser['etc'] == '0':
+      db.users.update_one({'id':testUser['id']},{'$set':{'etc':'1'}})
+      etc = list(db.shop.find({'food_category': '기타'}, {'_id': False}))
+      return jsonify({'result' : 'success', 'list' : etc, 'status': 1})
+    else:
+      db.users.update_one({'id':testUser['id']},{'$set':{'etc':'0'}})
+      return jsonify({'result' : 'success','status': 0, 'category': '기타'}) 
 
-@app.route('/api/west', methods=['GET'])
-def show_west():
-  west = list(db.shop.find({'food_category': '양식'}, {'_id': False}))
-  return jsonify({'result' : 'success', 'west_list' : west})
-
-@app.route('/api/cn', methods=['GET'])
-def show_cn():
-  cn = list(db.shop.find({'food_category': '중식'}, {'_id': False}))
-  return jsonify({'result' : 'success', 'cn_list' : cn})
-
-@app.route('/api/jp', methods=['GET'])
-def show_jp():
-  jp = list(db.shop.find({'food_category': '일식'}, {'_id': False}))
-  return jsonify({'result' : 'success', 'jp_list' : jp})
-
-@app.route('/api/etc', methods=['GET'])
-def show_etc():
-  etc = list(db.shop.find({'food_category': '기타'}, {'_id': False}))
-  return jsonify({'result' : 'success', 'etc_list' : etc})
 
 if __name__ == '__main__':  
    app.run('0.0.0.0',port=5000,debug=True)
