@@ -166,7 +166,7 @@ def api_login():
         # [JWT] payload 지정
         payload = {
             'id': id_receive,
-            'exp': datetime.utcnow() + timedelta(seconds=300)
+            'exp': datetime.utcnow() + timedelta(seconds=300000)
         }
         # [JWT] 암호화 방식
         token = jwt.encode(payload, app.secret_key, algorithm='HS256')        

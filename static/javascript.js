@@ -129,24 +129,27 @@ function show(category) {
             let hate = list["hate"];
             let foodCode = list["food_code"];
 
-            let tempHtml = `<div id="${foodCategory}">${foodCategory} 추천 메뉴
-                            <div id="card">
-                                <p id="foodname">${foodName}</p>
-                                <p id="storename">${shopName}</p>
-                                <p id="address">주소 : ${shopAddress}</p>
-                                <img src="${shopImg}">
-                                <div class="field is-grouped">
-                                    <p class="control">
-                                        <input type="checkbox" name="category" id="좋아요" onclick="like(${foodCode})">좋아요
-                                    </p>
-                                    <p class="control">
-                                        <input type="checkbox" name="category" id="싫어요" onclick="hate(${foodCode})">싫어요
-                                    </p>
+            let tempHtml = `<div id="${foodCategory}">
+                                <del>${foodCategory} 추천 메뉴</del>
+                                <div id="card">
+                                    <img src="${shopImg}">
+                                    <div class="box__info">
+                                        <p class="food_name" id="foodname">${foodName}</p>
+                                        <p class="shop_name" id="storename">${shopName}</p>
+                                        <p class="shop_address" id="address">주소 : ${shopAddress}</p>
+                                    </div>
+                                    <div class="field is-grouped">
+                                        <p class="control">
+                                            <input type="checkbox" name="category" id="좋아요" onclick="like(${foodCode})">좋아요
+                                        </p>
+                                        <p class="control">
+                                            <input type="checkbox" name="category" id="싫어요" onclick="hate(${foodCode})">싫어요
+                                        </p>
+                                    </div>
+                                    <p>좋아요 : ${like}개</p>
+                                    <p>싫어요 : ${hate}개</p>
+                                    <hr>
                                 </div>
-                                <p>좋아요 : ${like}개</p>
-                                <p>싫어요 : ${hate}개</p>
-                                <hr>
-                            </div>
                             </div>`;
             $("#right").append(tempHtml);
         }
