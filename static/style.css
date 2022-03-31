@@ -110,4 +110,5 @@ table {
 .box__addform .form-group .control{display:inline-block;margin-left:40px}
 .box__addform .form-group label{font-size:16px;font-weight:700}
 .box__addform .form-group .form-control{margin-left:10px;padding:7px;border-radius:6px;border:1px solid #000}
-.box__addform button{display:block;width:300px;height:44px;margin:15px auto 0;padding:8px;border-radius:15px;background-color:rgb(213,12,34);border:0;color:#fff;font-weight:700}
+.box__addform button{display:inline-block;width:300px;height:44px;margin:15px auto 0;padding:8px;border-radius:15px;background-color:rgb(213,12,34);border:0;color:#fff;font-size:15px;font-weight:700}
+.box__addform .btn2{background-color:rgb(24, 119, 242)}

@@ -98,6 +98,10 @@ function menuAddFunc(){
 function homeFunc(){
     window.location.href='/'
 }
+// 메인으로 가기
+function mainFunc(){
+    window.location.href='/main'
+}
 
 // list 기능 구현
 
