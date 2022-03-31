@@ -149,10 +149,11 @@ function show(category) {
                                     </div>
                                     <div class="field is-grouped">
                                         <p class="control">
-                                            <input type="checkbox" name="category" id="좋아요" onclick="like(${foodCode})">좋아요
+                                           <button type="button"  name="like" id="좋아요" onClick="like('${foodCode}')">좋아요</button>
+                                        
                                         </p>
                                         <p class="control">
-                                            <input type="checkbox" name="category" id="싫어요" onclick="hate(${foodCode})">싫어요
+                                        <button type="button"  name="category" id="싫어요" onClick="hate('${foodCode}')">싫어요</button>
                                         </p>
                                     </div>
                                     <p>좋아요 : ${like}개</p>
