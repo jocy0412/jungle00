@@ -29,64 +29,59 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <body>
     <div class="wrap">
-        <div class="jumbotron">
-            <h1 class="display-4">메뉴 추가하기</h1>
-            <p class="lead">추가하고 싶은 메뉴와 식당을 입력해주세요!</p>
-            <hr class="my-4">
+        <div class="box__add">
+            <h2 class="text__title">메뉴 추가하기</h1>
+            <p class="text__desc">추가하고 싶은 메뉴와 식당을 입력해주세요!</p>
+        </div>
+        <div class="box__addform">
             <div>
-                <div>
-                    <div class="form-group">
-                        <label for="post-url">추가하고 싶은 메뉴를 입력하세요</label>
-                        <input id="food_name" class="form-control" placeholder="메뉴를 입력하세요" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="post-url">메뉴의 카테고리를 선택하세요</label>
-                        <div class="field is-grouped">
-                            <p class="control">
-                              <input type="checkbox" name="category" id="한식">
-                              한식
-                            </p>
-                            <p class="control">
-                              <input type="checkbox" name="category" id="중식">
-                              중식
-                            </p>
-                            <p class="control">
-                              <input type="checkbox" name="category" id="일식">
-                              일식
-                            </p>
-                            <p class="control">
-                                <input type="checkbox" name="category" id="양식">
-                                양식
-                              </p>
-                            <p class="control">
-                              <input type="checkbox" name="category" id="기타">
-                              기타
-                            </p>
-                          </div>
-                    </div>
-                    <!-- <div class="form-group">
-                        <label for="post-url">식당의 네이버 지도 url을 입력하세요</label>
-                        <input id="shop_url" class="form-control" placeholder="네이버 지도 url을 입력하세요">
-                    </div> -->
-                    <div class="form-group">
-                        <label for="post-url">메뉴 사진 url를 입력해주세요</label>
-                        <input id="shop_img" class="form-control" placeholder="메뉴 사진 url을 입력하세요" required>
-                        <!-- <p>
-                            <form action="/fileUpload" method="POST" enctype = "multipart/form-data">
-                            <input type = "file" name = "file" id= "shop_img"/>  
-                            <input type = "submit" value="이미지 저장"/>
-                        </p> -->
-                    </div>
-                    <div class="form-group">
-                        <label for="post-url">식당을 추천해주세요</label>
-                        <input id="shop_name" class="form-control" placeholder="식당을 입력하세요" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="post-url">식당 위치를 입력해주세요</label>
-                        <input id="shop_address" class="form-control" placeholder="식당 위치를 입력하세요" required>
-                    </div>
-                    <button type="button" class="button" onclick="addMenu()">메뉴 추가하기</button>
+                <div class="form-group">
+                    <label for="post-url">메뉴의 카테고리를 선택하세요</label>
+                    <div>
+                        <p class="control">
+                          <input type="checkbox" name="category" id="한식">
+                          한식
+                        </p>
+                        <p class="control">
+                          <input type="checkbox" name="category" id="중식">
+                          중식
+                        </p>
+                        <p class="control">
+                          <input type="checkbox" name="category" id="일식">
+                          일식
+                        </p>
+                        <p class="control">
+                            <input type="checkbox" name="category" id="양식">
+                            양식
+                          </p>
+                        <p class="control">
+                          <input type="checkbox" name="category" id="기타">
+                          기타
+                        </p>
+                      </div>
                 </div>
+                <div class="form-group">
+                    <label for="post-url">추가하고 싶은 메뉴를 입력하세요</label>
+                    <input id="food_name" class="form-control" placeholder="메뉴를 입력하세요" required>
+                </div>
+                <div class="form-group">
+                    <label for="post-url">메뉴 사진 url를 입력해주세요</label>
+                    <input id="shop_img" class="form-control" placeholder="메뉴 사진 url을 입력하세요" required>
+                    <!-- <p>
+                        <form action="/fileUpload" method="POST" enctype = "multipart/form-data">
+                        <input type = "file" name = "file" id= "shop_img"/>  
+                        <input type = "submit" value="이미지 저장"/>
+                    </p> -->
+                </div>
+                <div class="form-group">
+                    <label for="post-url">식당을 추천해주세요</label>
+                    <input id="shop_name" class="form-control" placeholder="식당을 입력하세요" required>
+                </div>
+                <div class="form-group">
+                    <label for="post-url">식당 위치를 입력해주세요</label>
+                    <input id="shop_address" class="form-control" placeholder="식당 위치를 입력하세요" required>
+                </div>
+                <button type="button" class="button" onclick="addMenu()">메뉴 추가하기</button>
             </div>
         </div>
 
