@@ -29,6 +29,25 @@ def registerPage():
 @app.route('/api/addpage')
 def addPage():
    return render_template('add.html')
+ 
+ 
+# 좋아요
+@app.route('/api/like', methods=['POST'])
+def likeMenu():
+    foodCode_receive = request.form['foodCode_give']
+    target_like = db.shop.find_one({'food_code':foodCode_receive})
+    goal = target_like['like'] + 1
+    db.shop.update_one({'food_code':foodCode_receive},{'$set':{'like':goal}})
+    return jsonify({'result': 'success'})
+
+# 싫어요
+@app.route('/api/hate', methods=['POST'])
+def hateMenu():
+    foodCode_receive = request.form['foodCode_give']
+    target_hate = db.shop.find_one({'food_code':foodCode_receive})
+    goal = target_hate['hate'] + 1
+    db.shop.update_one({'food_code':foodCode_receive},{'$set':{'hate':goal}})
+    return jsonify({'result': 'success'}) 
 
 @app.route('/main')
 # @jwt_required()

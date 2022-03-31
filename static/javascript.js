@@ -167,14 +167,44 @@ function show(category) {
     });
 }
   
+// 좋아요 기능
 function like(foodCode){
-
+    // 좋아요 요청
+    $.ajax({
+        type: "POST", // POST 방식으로 요청하겠다.
+        url: "/api/like", // /add라는 url에 요청하겠다.
+        data: {
+                foodCode_give: foodCode,
+                }, // 데이터를 주는 방법
+        success: function (response) { // 성공하면
+            if (response["result"] == "success") {
+                alert("좋아요!");
+                // 3. 성공 시 페이지 새로고침하기
+                window.location.href='/main'
+            } 
+        }
+    })
 }
 
+// 싫어요 기능
 function hate(foodCode){
 
+    // 싫어요 요청
+    $.ajax({
+        type: "POST", // POST 방식으로 요청하겠다.
+        url: "/api/hate", // /add라는 url에 요청하겠다.
+        data: {
+                foodCode_give: foodCode,
+                }, // 데이터를 주는 방법
+        success: function (response) { // 성공하면
+            if (response["result"] == "success") {
+                alert("싫어요!");
+                // 3. 성공 시 페이지 새로고침하기
+                window.location.href='/main'
+            } 
+        }
+    })
 }
-
 //  메뉴추가
 
 function addMenu() {

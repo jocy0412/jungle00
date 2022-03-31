@@ -88,6 +88,12 @@
             </div>
         </div>    
         <div id="right">
+            <!-- {% if kor == "0" and cn== "0" and jpn == "0" and west == "0" and etc=="0" %}
+            <div name = "first">
+                <p>메뉴 카테고리를 선택하지 않으셨습니다.</p>
+                <p>메뉴 카테고리를 골라주세요!</p>
+            </div>
+            {% endif %}             -->
             {% if kor == "1" %}
                 {% for k in kList %}
                     <div id="kf" name="kf">
@@ -102,10 +108,10 @@
                                 </div>
                                 <div class="field is-grouped">
                                     <p class="control">
-                                        <input type="checkbox" name="category" id="좋아요" onclick="like('{{code}}')">좋아요
+                                        <button type="button"  name="like" id="좋아요" onClick="like('{{code}}')">좋아요</button>
                                     </p>
                                     <p class="control">
-                                        <input type="checkbox" name="category" id="싫어요" onclick="hate('{{code}}')">싫어요
+                                        <button type="button"  name="category" id="싫어요" onClick="hate('{{code}}')">싫어요</button>
                                     </p>
                                 </div>
                                 <p>좋아요 : {{k['like']}}개</p>
@@ -130,10 +136,10 @@
                                 </div>
                                 <div class="field is-grouped">
                                     <p class="control">
-                                        <input type="checkbox" name="category" id="좋아요" onclick="like('{{code}}')">좋아요
+                                        <button type="button"  name="like" id="좋아요" onClick="like('{{code}}')">좋아요</button>
                                     </p>
                                     <p class="control">
-                                        <input type="checkbox" name="category" id="싫어요" onclick="hate('{{code}}')">싫어요
+                                        <button type="button"  name="category" id="싫어요" onClick="hate('{{code}}')">싫어요</button>
                                     </p>
                                 </div>
                                 <p>좋아요 : {{k['like']}}개</p>
@@ -158,10 +164,10 @@
                                 </div>
                                 <div class="field is-grouped">
                                     <p class="control">
-                                        <input type="checkbox" name="category" id="좋아요" onclick="like('{{code}}')">좋아요
+                                        <button type="button"  name="like" id="좋아요" onClick="like('{{code}}')">좋아요</button>
                                     </p>
                                     <p class="control">
-                                        <input type="checkbox" name="category" id="싫어요" onclick="hate('{{code}}')">싫어요
+                                        <button type="button"  name="category" id="싫어요" onClick="hate('{{code}}')">싫어요</button>
                                     </p>
                                 </div>
                                 <p>좋아요 : {{k['like']}}개</p>
@@ -186,10 +192,10 @@
                                 </div>
                                 <div class="field is-grouped">
                                     <p class="control">
-                                        <input type="checkbox" name="category" id="좋아요" onclick="like('{{code}}')">좋아요
+                                        <button type="button"  name="like" id="좋아요" onClick="like('{{code}}')">좋아요</button>
                                     </p>
                                     <p class="control">
-                                        <input type="checkbox" name="category" id="싫어요" onclick="hate('{{code}}')">싫어요
+                                        <button type="button"  name="category" id="싫어요" onClick="hate('{{code}}')">싫어요</button>
                                     </p>
                                 </div>
                                 <p>좋아요 : {{k['like']}}개</p>
@@ -214,10 +220,10 @@
                                 </div>
                                 <div class="field is-grouped">
                                     <p class="control">
-                                        <input type="checkbox" name="category" id="좋아요" onclick="like('{{code}}')">좋아요
+                                        <button type="button"  name="like" id="좋아요" onClick="like('{{code}}')">좋아요</button>
                                     </p>
                                     <p class="control">
-                                        <input type="checkbox" name="category" id="싫어요" onclick="hate('{{code}}')">싫어요
+                                        <button type="button"  name="category" id="싫어요" onClick="hate('{{code}}')">싫어요</button>
                                     </p>
                                 </div>
                                 <p>좋아요 : {{k['like']}}개</p>
