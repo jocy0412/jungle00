@@ -36,6 +36,11 @@ function insertFunc(){
 // 중복확인
 function doubleCheck(){
     let id_val = $('#input_id').val();
+    console.log(id_val);
+    if (id_val == false){
+        alert('아이디를 입력해주세요');
+        return false;
+    }
     $.ajax({
         type: "POST",
         url: "/api/doublecheck",
